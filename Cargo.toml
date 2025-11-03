@@ -1,0 +1,27 @@
+[package]
+name = "axum-size-optimized"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = { version = "0.7", default-features = false, features = ["http1", "tokio", "json"] }
+tokio = { version = "1", default-features = false, features = ["net", "rt-multi-thread", "macros"] }
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+serde_json = { version = "1.0", default-features = false, features = ["std"] }
+tower = { version = "0.4", default-features = false }
+
+[profile.release]
+opt-level = "s"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.release-z]
+inherits = "release"
+opt-level = "z"
+
+[profile.release-ultra]
+inherits = "release"
+opt-level = "z"
+lto = "fat"
